@@ -1,0 +1,10 @@
+{
+  "name": "LabelTrust Checker",
+  "description": "FSSAI Food Safety Trust Score & Label Verification prototype for Indian consumers to scan barcodes, verify regulatory license records, inspect violations, and compare food trust scores.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
