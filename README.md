@@ -57,6 +57,23 @@ LabelTrust Checker is a mobile-first web application designed for the Indian con
 
 ---
 
+## 🌐 Deploying to GitHub Pages
+
+### Option A: Automated GitHub Actions (Recommended)
+This repository includes `.github/workflows/deploy.yml`.
+1. Go to your GitHub repository: **Settings** → **Pages**.
+2. Under **Build and deployment** → **Source**, select **GitHub Actions**.
+3. Push to `main` branch. GitHub Actions will automatically build and publish the site!
+
+### Option B: Manual Deploy via `gh-pages` CLI
+Run in terminal:
+```bash
+npm run deploy
+```
+This builds into `dist` and pushes directly to the `gh-pages` branch.
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Frontend**: React 19, TypeScript, Tailwind CSS v4, Lucide React, Motion, Canvas-Confetti
