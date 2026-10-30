@@ -5,12 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "tsx server.ts",
-    "build": "vite build",
+    "build": "vite build && rm -rf docs && cp -r dist docs && rm -rf assets && cp -r dist/assets assets",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
     "start": "tsx server.ts",
     "preview": "vite preview",
-    "clean": "rm -rf dist",
+    "clean": "rm -rf dist docs assets",
     "lint": "tsc --noEmit"
   },
   "dependencies": {

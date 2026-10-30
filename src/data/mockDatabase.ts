@@ -255,7 +255,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10012021000071',
     packageSize: '1000 ml Tetra Pak',
     typicalPrice: 72,
-    imageUrl: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Toned Milk', 'Vitamin A', 'Vitamin D2'],
     nutritionalHighlights: {
       calories: '58 kcal per 100ml',
@@ -277,7 +277,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10017042003195',
     packageSize: '100 g Box',
     typicalPrice: 85,
-    imageUrl: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Dried Red Capsicum & Red Chillies Blend'],
     nutritionalHighlights: {
       calories: '320 kcal per 100g',
@@ -300,7 +300,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10012011000088',
     packageSize: '500 g',
     typicalPrice: 215,
-    imageUrl: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?w=600&auto=format&fit=crop&q=80',
     ingredients: ['100% Pure Natural Honey'],
     nutritionalHighlights: {
       calories: '319 kcal per 100g',
@@ -322,7 +322,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10014011001559',
     packageSize: '500 g',
     typicalPrice: 175,
-    imageUrl: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1558642452-9d2a7deb7f62?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Natural Honey'],
     nutritionalHighlights: {
       calories: '320 kcal per 100g',
@@ -345,7 +345,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10012011000120',
     packageSize: '1000 ml Pouch',
     typicalPrice: 142,
-    imageUrl: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Refined Sunflower Oil', 'Vitamin A', 'Vitamin D'],
     nutritionalHighlights: {
       calories: '900 kcal per 100g',
@@ -367,7 +367,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10015064000572',
     packageSize: '200 g Sealed Pouch',
     typicalPrice: 76,
-    imageUrl: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1615485290382-441e4d049cb5?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Natural Whole Turmeric Rhizomes Ground'],
     nutritionalHighlights: {
       calories: '350 kcal per 100g',
@@ -389,7 +389,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10019051002821',
     packageSize: '200 g Pack',
     typicalPrice: 40,
-    imageUrl: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1558961363-fa8fdf82db35?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Refined Wheat Flour (Maida)', 'Sugar', 'Refined Palm Oil', 'Butter (2%)', 'Milk Solids', 'Raising Agents'],
     nutritionalHighlights: {
       calories: '495 kcal per 100g',
@@ -411,7 +411,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10012031000036',
     packageSize: '280 g (4 x 70g)',
     typicalPrice: 56,
-    imageUrl: 'https://images.unsplash.com/photo-1612927601601-6638404737ce?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1612927601601-6638404737ce?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Wheat Flour', 'Palm Oil', 'Iodised Salt', 'Mixed Spices (18.6%)', 'Noodle Tastemaker Seasoning'],
     nutritionalHighlights: {
       calories: '427 kcal per 100g',
@@ -434,7 +434,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '11518018000342',
     packageSize: '1000 ml Tin',
     typicalPrice: 420,
-    imageUrl: 'https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1631451095765-2c91616fc9e6?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Clarified Milk Fat (Ghee)'],
     nutritionalHighlights: {
       calories: '897 kcal per 100g',
@@ -457,7 +457,7 @@ export const INITIAL_PRODUCTS: Product[] = [
     fssaiLicenseId: '10013022001511',
     packageSize: '400 g Pack',
     typicalPrice: 65,
-    imageUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=500&auto=format&fit=crop&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&auto=format&fit=crop&q=80',
     ingredients: ['Wheat Flour', 'Sugar', 'Vegetable Fat', 'Yeast', 'Cardamom'],
     nutritionalHighlights: {
       calories: '440 kcal per 100g',

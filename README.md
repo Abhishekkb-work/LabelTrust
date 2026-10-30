@@ -59,18 +59,31 @@ LabelTrust Checker is a mobile-first web application designed for the Indian con
 
 ## 🌐 Deploying to GitHub Pages
 
-### Option A: Automated GitHub Actions (Recommended)
-This repository includes `.github/workflows/deploy.yml`.
-1. Go to your GitHub repository: **Settings** → **Pages**.
-2. Under **Build and deployment** → **Source**, select **GitHub Actions**.
-3. Push to `main` branch. GitHub Actions will automatically build and publish the site!
+The repository is pre-configured so that **any deployment option in GitHub Pages works out-of-the-box**:
 
-### Option B: Manual Deploy via `gh-pages` CLI
-Run in terminal:
+### Method 1: Deploy from Branch (Simplest & Direct)
+1. Push your code to GitHub:
+   ```bash
+   git add .
+   git commit -m "Deploy LabelTrust Checker"
+   git push origin main
+   ```
+2. In your GitHub repository, navigate to **Settings** → **Pages** (in the left sidebar).
+3. Under **Branch**:
+   - Choose `main`
+   - In the folder dropdown, you can select either **`/ (root)`** or **`/docs`** (both are pre-bundled and work!).
+4. Click **Save**. Your site will be live in 1-2 minutes without any blank screen!
+
+### Method 2: Deploy with GitHub Actions
+1. Go to **Settings** → **Pages**.
+2. Under **Build and deployment** → **Source**, select **GitHub Actions**.
+3. Push to `main`. The included workflow (`.github/workflows/deploy.yml`) will automatically build and publish the latest site.
+
+### Method 3: One-Command CLI Deploy
 ```bash
 npm run deploy
 ```
-This builds into `dist` and pushes directly to the `gh-pages` branch.
+This builds into `dist` and pushes directly to a `gh-pages` branch.
 
 ---
 

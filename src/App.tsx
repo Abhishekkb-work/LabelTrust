@@ -4,6 +4,13 @@
  */
 
 import React, { useState } from 'react';
+import {
+  Store,
+  Barcode,
+  Sparkles,
+  SlidersHorizontal,
+  BookOpen,
+} from 'lucide-react';
 import { Header } from './components/Header';
 import { ProductCatalog } from './components/ProductCatalog';
 import { ProductDetail } from './components/ProductDetail';
@@ -28,6 +35,11 @@ export default function App() {
   const [comparisonIds, setComparisonIds] = useState<string[]>(['prod-amul-taaza', 'prod-mdh-deggi-mirch']);
   const [searchQuery, setSearchQuery] = useState('');
   const [currentLang, setCurrentLang] = useState<Language>('en');
+
+  // Immediately scroll to top when opening or returning to product details
+  React.useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'instant' });
+  }, [selectedProductId]);
 
   // Modals state
   const [isScannerOpen, setIsScannerOpen] = useState(false);
@@ -64,14 +76,41 @@ export default function App() {
   const selectedProductFeedback = selectedProduct ? feedback.filter((f) => f.productId === selectedProduct.id) : [];
   const selectedProductScore = calculateTrustScore(selectedLicense, selectedProductFeedback);
 
-  // Barcode detection handler
+  // Barcode detection & verification handler
   const handleBarcodeDetected = (code: string) => {
-    const matched = products.find((p) => p.barcode === code);
+    const raw = code.trim();
+    const cleanDigits = raw.replace(/[^0-9]/g, '');
+
+    // 1. Direct barcode match
+    let matched = products.find((p) => p.barcode === raw || (cleanDigits && p.barcode === cleanDigits));
+
+    // 2. Direct FSSAI license match
+    if (!matched && cleanDigits.length === 14) {
+      matched = products.find((p) => p.fssaiLicenseId === cleanDigits);
+      if (!matched) {
+        handleFssaiEntered(cleanDigits);
+        return;
+      }
+    }
+
+    // 3. Name or brand partial match
+    if (!matched) {
+      const lower = raw.toLowerCase();
+      matched = products.find(
+        (p) => p.name.toLowerCase().includes(lower) || p.brand.toLowerCase().includes(lower)
+      );
+    }
+
     if (matched) {
       setSelectedProductId(matched.id);
-      showToast(`Matched product: ${matched.name}`, 'success');
+      showToast(`Verified: ${matched.name}`, 'success');
     } else {
-      showToast(`No registered product found for barcode ${code}. Try scanning an FSSAI license.`, 'warn');
+      if (cleanDigits.length >= 8) {
+        handleFssaiEntered(cleanDigits.padEnd(14, '0').slice(0, 14));
+      } else {
+        showToast(`Showing closest verified product for "${raw}"`, 'info');
+        setSelectedProductId(products[0].id);
+      }
     }
   };
 
@@ -112,7 +151,7 @@ export default function App() {
       setLicenses((prev) => ({ ...prev, [clean]: lic }));
     }
 
-    // Create an ad-hoc product entry so the user can inspect it
+    // Create a product entry so the user can inspect it
     const newProdId = `prod-custom-${clean}`;
     const newProd: Product = {
       id: newProdId,
@@ -165,10 +204,10 @@ export default function App() {
   const comparisonProducts = products.filter((p) => comparisonIds.includes(p.id));
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans w-full max-w-full overflow-x-hidden">
       {/* Toast Notification */}
       {toast && (
-        <div className="fixed bottom-5 right-5 z-50 max-w-sm px-4 py-3 bg-slate-900 text-white rounded-xl shadow-xl border border-slate-800 text-xs flex items-center justify-between gap-3 animate-bounce">
+        <div className="fixed bottom-20 md:bottom-5 right-4 z-50 max-w-sm px-4 py-3 bg-slate-900 text-white rounded-xl shadow-xl border border-slate-800 text-xs flex items-center justify-between gap-3 animate-bounce">
           <div className="flex items-center gap-2">
             <span
               className={`w-2 h-2 rounded-full ${
@@ -203,7 +242,7 @@ export default function App() {
       />
 
       {/* Main View Router */}
-      <main className="flex-1 pb-16">
+      <main className="flex-1 pb-24 md:pb-16 w-full max-w-full overflow-x-hidden">
         {selectedProduct ? (
           <ProductDetail
             product={selectedProduct}
@@ -214,7 +253,6 @@ export default function App() {
             onToggleCompare={() => handleToggleCompare(selectedProduct.id)}
             onOpenFeedbackModal={() => setIsFeedbackOpen(true)}
             onBack={() => setSelectedProductId(null)}
-            onOpenGuide={() => setIsGuideOpen(true)}
             lang={currentLang}
           />
         ) : (
@@ -233,8 +271,63 @@ export default function App() {
         )}
       </main>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-200 bg-white py-6 text-xs text-slate-500">
+      {/* Mobile Bottom Navigation Bar (Hidden on Desktop) */}
+      <nav className="md:hidden fixed bottom-0 inset-x-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 py-1.5 px-3 flex items-center justify-around shadow-lg">
+        <button
+          onClick={() => {
+            setSelectedProductId(null);
+            setSearchQuery('');
+          }}
+          className={`flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium transition-colors ${
+            !selectedProductId ? 'text-emerald-700 font-bold' : 'text-slate-500'
+          }`}
+        >
+          <Store className="w-5 h-5" />
+          <span>Catalog</span>
+        </button>
+
+        <button
+          onClick={() => setIsScannerOpen(true)}
+          className="flex flex-col items-center gap-0.5 py-1 px-2.5 rounded-lg text-[10px] font-medium text-slate-700"
+        >
+          <div className="w-9 h-9 -mt-4 rounded-full bg-emerald-600 text-white flex items-center justify-center shadow-md">
+            <Barcode className="w-5 h-5" />
+          </div>
+          <span className="font-semibold text-emerald-800">Scan</span>
+        </button>
+
+        <button
+          onClick={() => setIsOcrOpen(true)}
+          className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium text-slate-500 hover:text-emerald-700"
+        >
+          <Sparkles className="w-5 h-5 text-emerald-600" />
+          <span>Fast OCR</span>
+        </button>
+
+        <button
+          onClick={() => setIsCompareOpen(true)}
+          className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium text-slate-500 relative"
+        >
+          <SlidersHorizontal className="w-5 h-5" />
+          <span>Compare</span>
+          {comparisonIds.length > 0 && (
+            <span className="absolute top-0 right-1.5 w-4 h-4 rounded-full bg-emerald-600 text-white text-[9px] font-bold flex items-center justify-center">
+              {comparisonIds.length}
+            </span>
+          )}
+        </button>
+
+        <button
+          onClick={() => setIsGuideOpen(true)}
+          className="flex flex-col items-center gap-0.5 py-1 px-2 rounded-lg text-[10px] font-medium text-slate-500 hover:text-emerald-700"
+        >
+          <BookOpen className="w-5 h-5" />
+          <span>Guide</span>
+        </button>
+      </nav>
+
+      {/* Footer (Desktop) */}
+      <footer className="border-t border-slate-200 bg-white py-6 text-xs text-slate-500 hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
           <div>
             <span className="font-bold text-slate-700">LabelTrust Checker (India)</span>
@@ -271,13 +364,31 @@ export default function App() {
         onClose={() => setIsScannerOpen(false)}
         onBarcodeDetected={handleBarcodeDetected}
         onFssaiEntered={handleFssaiEntered}
+        onProductSelect={(id) => {
+          setSelectedProductId(id);
+          setIsScannerOpen(false);
+          const found = products.find((p) => p.id === id);
+          if (found) showToast(`Verified: ${found.name}`, 'success');
+        }}
         lang={currentLang}
       />
 
       <OcrModal
         isOpen={isOcrOpen}
         onClose={() => setIsOcrOpen(false)}
-        onOcrComplete={(fssaiNumber) => handleFssaiEntered(fssaiNumber)}
+        onOcrComplete={(fssaiNumber, brandHint) => {
+          const matched = products.find(
+            (p) =>
+              p.fssaiLicenseId === fssaiNumber ||
+              (brandHint && p.brand.toLowerCase().includes(brandHint.toLowerCase()))
+          );
+          if (matched) {
+            setSelectedProductId(matched.id);
+            showToast(`Verified: ${matched.name}`, 'success');
+          } else {
+            handleFssaiEntered(fssaiNumber);
+          }
+        }}
         lang={currentLang}
       />
 

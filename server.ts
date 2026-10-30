@@ -46,23 +46,19 @@ app.post('/api/ocr', async (req: Request, res: Response) => {
     if (geminiClient && process.env.GEMINI_API_KEY) {
       try {
         console.log('[Server] Sending label image to Gemini 3.8 Flash for OCR extraction...');
-        const prompt = `
-You are an expert Indian food label compliance inspector for the Food Safety and Standards Authority of India (FSSAI).
-Analyze this food packaging label image and extract the following structured details in valid JSON:
-1. "fssaiNumber": The 14-digit FSSAI license number (e.g. starting with 1 or 2, exactly 14 digits). Look closely near the FSSAI logo, "Lic. No.", "License No", "FSSAI Lic".
-2. "brandName": The primary brand name (e.g. Amul, MDH, Tata, Britannia, Dabur, etc.)
-3. "productName": Full commercial product name.
-4. "category": Food category (Dairy, Spices, Honey, Edible Oils, Bakery, Beverages, etc.)
-5. "batchNo": Batch or Lot code if visible.
-6. "mfgDate": Manufacturing date if visible.
-7. "bestBefore": Expiry or Best Before date.
-8. "ingredients": Array of ingredients listed.
-9. "claims": Packaging claims (e.g. "100% Pure", "No Added Preservatives", "Zero Cholesterol", "Rich in Iron").
-10. "confidence": Number between 0.5 and 0.99.
-11. "warnings": Array of any potential red flags or observations (e.g. "Unverified pure claims", "License number partially obscured", "Missing green/brown veg symbol").
-
-Return ONLY raw JSON, with no markdown code blocks or surrounding text.
-`;
+        const prompt = `Extract Indian food label details in JSON:
+{
+  "fssaiNumber": "14-digit FSSAI license number (digits only)",
+  "brandName": "Brand name",
+  "productName": "Product title",
+  "category": "Category name",
+  "batchNo": "Batch code if visible",
+  "bestBefore": "Expiry or best before date",
+  "ingredients": ["Array of ingredients"],
+  "claims": ["Claims e.g. 100% Pure, No Added Sugar"],
+  "confidence": 0.95,
+  "warnings": ["Any potential non-compliance or observations"]
+}`;
 
         const response = await geminiClient.models.generateContent({
           model: 'gemini-3.8-flash',
@@ -77,11 +73,13 @@ Return ONLY raw JSON, with no markdown code blocks or surrounding text.
               text: prompt,
             },
           ],
+          config: {
+            responseMimeType: 'application/json',
+          },
         });
 
-        const textOutput = response.text || '';
-        const cleanedJson = textOutput.replace(/```json/gi, '').replace(/```/g, '').trim();
-        const parsed = JSON.parse(cleanedJson);
+        const textOutput = response.text || '{}';
+        const parsed = JSON.parse(textOutput);
 
         return res.json({
           success: true,

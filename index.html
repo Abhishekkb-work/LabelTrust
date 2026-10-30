@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <title>LabelTrust Checker | FSSAI Food Safety Trust Score</title>
     <meta name="description" content="Instant FSSAI regulatory license verification, recall and violation tracker, and transparent food trust scores for Indian consumers." />
     <meta property="og:title" content="LabelTrust Checker | FSSAI Food Safety Trust Score" />
@@ -13,8 +13,34 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   </head>
-  <body class="bg-slate-50 text-slate-900 antialiased font-sans selection:bg-emerald-100 selection:text-emerald-900">
-    <div id="root"></div>
+  <body class="bg-slate-50 text-slate-900 antialiased font-sans selection:bg-emerald-100 selection:text-emerald-900 w-full max-w-full overflow-x-hidden m-0 p-0">
+    <div id="root" class="w-full max-w-full overflow-x-hidden"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script type="module">
+      // GitHub Pages Static Hosting Fallback:
+      // When deployed directly to GitHub Pages, raw TypeScript /src/main.tsx cannot be executed by browsers.
+      // This fallback checks if the React app mounted into #root. If not, it loads the bundled production assets.
+      setTimeout(function() {
+        var root = document.getElementById('root');
+        if (!root || !root.hasChildNodes()) {
+          console.info('[LabelTrust] Loading production bundle for static hosting...');
+          if (!document.querySelector('link[data-prod-css]')) {
+            var link = document.createElement('link');
+            link.rel = 'stylesheet';
+            link.href = './assets/index.css';
+            link.setAttribute('data-prod-css', 'true');
+            document.head.appendChild(link);
+          }
+          if (!document.querySelector('script[data-prod-js]')) {
+            var script = document.createElement('script');
+            script.type = 'module';
+            script.crossOrigin = 'anonymous';
+            script.src = './assets/index.js';
+            script.setAttribute('data-prod-js', 'true');
+            document.body.appendChild(script);
+          }
+        }
+      }, 200);
+    </script>
   </body>
 </html>

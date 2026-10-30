@@ -2,14 +2,11 @@ import React, { useState } from 'react';
 import {
   Barcode,
   Sparkles,
-  SlidersHorizontal,
   ShieldCheck,
-  AlertTriangle,
   ShieldAlert,
   ArrowRight,
   Plus,
   Check,
-  Search,
   Filter,
 } from 'lucide-react';
 import { Product, FSSAILicense, CommunityFeedback } from '../types';
@@ -72,28 +69,28 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
   });
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 space-y-8">
+    <div className="max-w-7xl mx-auto px-3 sm:px-6 py-4 sm:py-6 space-y-6 sm:space-y-8 w-full max-w-full overflow-hidden box-border">
       {/* Hero Action Banner */}
-      <div className="relative rounded-3xl bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 text-white p-6 sm:p-10 shadow-xl overflow-hidden border border-slate-800">
-        <div className="relative z-10 max-w-2xl space-y-3">
-          <div className="inline-flex items-center gap-2 px-3 py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 text-xs font-semibold">
-            <ShieldCheck className="w-4 h-4 text-emerald-400" />
-            <span>FSSAI Public Registry & Crowdsourced Trust</span>
+      <div className="relative rounded-2xl sm:rounded-3xl bg-gradient-to-r from-slate-900 via-slate-850 to-slate-900 text-white p-4.5 sm:p-8 shadow-xl overflow-hidden border border-slate-800 w-full">
+        <div className="relative z-10 max-w-2xl space-y-2.5 sm:space-y-3">
+          <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 sm:px-3 sm:py-1 bg-emerald-500/10 border border-emerald-500/30 rounded-full text-emerald-400 text-[10px] sm:text-xs font-semibold">
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-400" />
+            <span>FSSAI Public Registry & Verified Trust</span>
           </div>
 
-          <h1 className="text-2xl sm:text-4xl font-black tracking-tight text-white leading-tight">
-            Know the safety & regulatory record of your packaged food
+          <h1 className="text-xl sm:text-3xl font-black tracking-tight text-white leading-tight">
+            Verify the safety & FSSAI license record of your food
           </h1>
 
           <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-xl">
-            Scan barcodes, photograph rear labels, or enter 14-digit FSSAI numbers to verify official licensee records, past violations, and consumer incident reports before buying.
+            Scan barcodes, photograph rear labels with fast AI OCR, or verify 14-digit FSSAI licenses to inspect past violations, recalls, and consumer reports.
           </p>
 
           {/* Quick Action CTA Buttons */}
-          <div className="flex flex-wrap gap-3 pt-3">
+          <div className="flex flex-wrap items-center gap-2 sm:gap-3 pt-2">
             <button
               onClick={onOpenScanner}
-              className="px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-md hover:shadow-lg flex items-center gap-2 group"
+              className="flex-1 sm:flex-none px-4 py-2.5 sm:px-5 sm:py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold text-xs rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center gap-2 group"
             >
               <Barcode className="w-4 h-4 text-slate-950 group-hover:scale-110 transition-transform" />
               <span>{t.scanBarcode}</span>
@@ -101,7 +98,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 
             <button
               onClick={onOpenOcr}
-              className="px-5 py-3 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold text-xs rounded-xl transition-all flex items-center gap-2 group"
+              className="flex-1 sm:flex-none px-4 py-2.5 sm:px-5 sm:py-3 bg-slate-800 hover:bg-slate-700 text-white border border-slate-700 font-bold text-xs rounded-xl transition-all flex items-center justify-center gap-2 group"
             >
               <Sparkles className="w-4 h-4 text-emerald-400 group-hover:rotate-12 transition-transform" />
               <span>{t.scanPhoto}</span>
@@ -109,7 +106,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
 
             <button
               onClick={onOpenGuide}
-              className="px-4 py-3 bg-white/5 hover:bg-white/10 text-slate-300 font-medium text-xs rounded-xl transition-colors hidden sm:inline-flex items-center gap-1.5"
+              className="hidden md:inline-flex px-4 py-3 bg-white/5 hover:bg-white/10 text-slate-300 font-medium text-xs rounded-xl transition-colors items-center gap-1.5"
             >
               <span>{t.guideFssai}</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -122,14 +119,14 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
       </div>
 
       {/* Filter Toolbar */}
-      <div className="space-y-3">
+      <div className="space-y-3 w-full">
         {/* Category Tabs */}
-        <div className="flex items-center gap-1.5 overflow-x-auto pb-1 scrollbar-none">
+        <div className="flex items-center gap-1.5 overflow-x-auto pb-1.5 scrollbar-none w-full max-w-full">
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-3.5 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition-all ${
+              className={`px-3 py-1.5 text-xs font-semibold rounded-xl whitespace-nowrap transition-all shrink-0 ${
                 selectedCategory === cat
                   ? 'bg-slate-900 text-white shadow-xs'
                   : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
@@ -141,18 +138,20 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
         </div>
 
         {/* Trust Status Filter Row */}
-        <div className="flex flex-wrap items-center justify-between gap-3 text-xs">
-          <div className="flex items-center gap-2 text-slate-500">
-            <Filter className="w-3.5 h-3.5" />
-            <span className="font-semibold text-slate-700">Filter Trust Tier:</span>
+        <div className="flex flex-wrap items-center justify-between gap-2 text-xs w-full">
+          <div className="flex flex-wrap items-center gap-1.5 text-slate-500">
+            <span className="font-semibold text-slate-700 flex items-center gap-1 text-[11px] sm:text-xs mr-1">
+              <Filter className="w-3 h-3 text-slate-400" />
+              Tier:
+            </span>
             {['All', 'High Trust', 'Needs Review', 'Alerts & Suspended'].map((status) => (
               <button
                 key={status}
                 onClick={() => setTrustFilter(status)}
-                className={`px-2.5 py-1 rounded-lg text-xs font-medium transition-colors ${
+                className={`px-2 py-0.5 sm:px-2.5 sm:py-1 rounded-lg text-[11px] sm:text-xs font-medium transition-colors ${
                   trustFilter === status
                     ? 'bg-emerald-100 text-emerald-900 font-bold'
-                    : 'text-slate-600 hover:text-slate-900'
+                    : 'bg-slate-100/70 text-slate-600 hover:text-slate-900'
                 }`}
               >
                 {status}
@@ -160,15 +159,15 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
             ))}
           </div>
 
-          <span className="text-slate-400 text-xs">
-            Showing <strong>{filteredProducts.length}</strong> verified products
+          <span className="text-slate-400 text-[11px]">
+            <strong>{filteredProducts.length}</strong> items verified
           </span>
         </div>
       </div>
 
-      {/* Products Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5">
-        {filteredProducts.map(({ product, license, score, feedbackCount }) => {
+      {/* Products Grid with Clean, Fully Visible Product Images */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-5 w-full">
+        {filteredProducts.map(({ product, license, score }) => {
           const isComparing = comparisonIds.includes(product.id);
           const isSuspended = license?.status === 'SUSPENDED';
 
@@ -183,16 +182,28 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                   : 'border-slate-200 hover:border-amber-400'
               }`}
             >
-              {/* Product Top Visual */}
+              {/* Product Top Visual: Clean Box Showing ENTIRE Product Without Cropping */}
               <div
                 onClick={() => onSelectProduct(product.id)}
-                className="relative cursor-pointer aspect-16/10 bg-slate-100 overflow-hidden"
+                className="relative cursor-pointer h-48 bg-white border-b border-slate-100 flex items-center justify-center p-3.5 overflow-hidden"
               >
                 <img
                   src={product.imageUrl}
                   alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                  loading="lazy"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    target.style.display = 'none';
+                    const fallback = target.nextElementSibling as HTMLElement | null;
+                    if (fallback) fallback.classList.remove('hidden');
+                  }}
+                  className="max-h-full max-w-full object-contain group-hover:scale-105 transition-transform duration-300"
                 />
+                <div className="hidden w-full h-full flex-col items-center justify-center p-3 text-center bg-slate-50 rounded-lg">
+                  <span className="font-extrabold text-xs text-emerald-800 uppercase tracking-wider">{product.brand}</span>
+                  <span className="font-semibold text-xs text-slate-800 line-clamp-2 mt-1">{product.name}</span>
+                  <span className="text-[10px] text-slate-400 mt-1 font-mono">FSSAI: {product.fssaiLicenseId}</span>
+                </div>
 
                 {/* Score Tag in Top Corner */}
                 <div className="absolute top-2.5 right-2.5 flex items-center gap-1.5 bg-white/95 backdrop-blur-xs px-2.5 py-1 rounded-xl shadow-xs border border-slate-200/80">
@@ -207,6 +218,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                   ></span>
                   <span className="font-black text-slate-900 text-xs">{score.finalScore}</span>
                   <span className="text-[10px] text-slate-400">/100</span>
+                </div>
+
+                {/* Category Badge */}
+                <div className="absolute top-2.5 left-2.5 bg-slate-100/90 text-slate-700 text-[10px] font-semibold px-2 py-0.5 rounded-lg border border-slate-200/60">
+                  {product.category}
                 </div>
 
                 {/* Suspended Alert Banner Overlay */}
@@ -226,7 +242,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       {product.brand}
                     </span>
                     <span className="font-mono text-[10px] text-slate-400">
-                      {product.fssaiLicenseId.slice(0, 6)}...
+                      FSSAI: {product.fssaiLicenseId.slice(0, 5)}...
                     </span>
                   </div>
 
@@ -273,10 +289,10 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                 </div>
 
                 {/* Card Action Row */}
-                <div className="pt-2 flex items-center gap-2">
+                <div className="pt-1.5 flex items-center gap-2">
                   <button
                     onClick={() => onSelectProduct(product.id)}
-                    className="flex-1 py-1.5 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1"
+                    className="flex-1 py-2 px-3 bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold rounded-xl transition-colors flex items-center justify-center gap-1"
                   >
                     <span>Inspect Record</span>
                     <ArrowRight className="w-3 h-3 text-slate-400" />
@@ -287,7 +303,7 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
                       e.stopPropagation();
                       onToggleCompare(product.id);
                     }}
-                    className={`p-1.5 rounded-xl border transition-all ${
+                    className={`p-2 rounded-xl border transition-all shrink-0 ${
                       isComparing
                         ? 'bg-slate-900 text-white border-slate-900'
                         : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
@@ -304,11 +320,11 @@ export const ProductCatalog: React.FC<ProductCatalogProps> = ({
       </div>
 
       {/* Educational Consumer Notice at bottom of catalog */}
-      <div className="p-4 bg-slate-100/80 rounded-2xl border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+      <div className="p-3.5 sm:p-4 bg-slate-100/80 rounded-2xl border border-slate-200 text-xs text-slate-600 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
         <div className="flex items-center gap-2">
           <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
           <span>
-            <strong>Consumer Protection:</strong> LabelTrust Checker relies on the FoSCoS registry under the Food Safety & Standards Act 2006. We never declare adulteration without court/lab confirmation.
+            <strong>Consumer Protection:</strong> LabelTrust Checker references the FoSCoS registry under the Food Safety & Standards Act 2006.
           </span>
         </div>
         <button

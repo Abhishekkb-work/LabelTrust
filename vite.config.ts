@@ -9,8 +9,6 @@ const __dirname = path.dirname(__filename);
 
 export default defineConfig(() => {
   return {
-    // Relative base path ensures assets load correctly on GitHub Pages subpaths (e.g. /repo-name/)
-    // as well as custom domains or root deployments.
     base: './',
     plugins: [react(), tailwindcss()],
     resolve: {
@@ -18,8 +16,18 @@ export default defineConfig(() => {
         '@': path.resolve(__dirname, '.'),
       },
     },
+    build: {
+      outDir: 'dist',
+      assetsDir: 'assets',
+      rollupOptions: {
+        output: {
+          entryFileNames: 'assets/index.js',
+          chunkFileNames: 'assets/[name].js',
+          assetFileNames: 'assets/[name].[ext]',
+        },
+      },
+    },
     server: {
-      // HMR is disabled in AI Studio via DISABLE_HMR env var.
       hmr: process.env.DISABLE_HMR !== 'true',
       watch: process.env.DISABLE_HMR === 'true' ? null : {},
     },
